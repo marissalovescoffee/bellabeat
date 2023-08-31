@@ -1,0 +1,21 @@
+--Join sleep and activity tables so the sleep date is paired with the activity date that it impacted
+SELECT  
+  sleep.Id,
+  act.ActivityDate,
+  act.TotalSteps,
+  act.Calories,
+  ROUND((act.SedentaryMinutes-sleep.TotalMinutesAsleep)/60,1) AS awake_sedentary_hrs,
+  ROUND(sleep.TotalMinutesAsleep/60,1) AS total_sleep_hrs,
+  ROUND(act.SedentaryMinutes/60,1) AS total_sedentary_hrs
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.daily_activity` AS act
+  LEFT JOIN `bellabeat-case-study-396919.fitbit_data.sleep_day` AS sleep
+  ON act.Id = sleep.Id AND act.ActivityDate = (sleep.SleepDay+1)
+WHERE 
+  (sleep.TotalMinutesAsleep IS NOT NULL
+  OR sleep.TotalMinutesAsleep != 0)
+  AND act.TotalSteps != 0
+  AND (act.SedentaryMinutes-sleep.TotalMinutesAsleep)/60 > 0
+ORDER BY 
+  act.Id, 
+  act.ActivityDate;
