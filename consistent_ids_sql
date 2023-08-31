@@ -1,0 +1,29 @@
+-- Return distinct Ids from daily_activity that are not also in sleep_day
+SELECT 
+	DISTINCT a.Id
+FROM 
+	`bellabeat-case-study-396919.fitbit_data.daily_activity` AS a
+WHERE 
+	a.Id NOT IN 
+  (
+    SELECT 
+			sleep.Id
+    FROM 
+			`bellabeat-case-study-396919.fitbit_data.sleep_day` AS sleep
+  )
+ORDER BY 
+	a.Id ASC;
+
+-- Return distinct Ids from daily_activity that are not also in weight_log
+SELECT 
+	DISTINCT a.Id
+FROM 
+	`bellabeat-case-study-396919.fitbit_data.daily_activity` AS a
+WHERE 
+	a.Id NOT IN 
+  (
+    SELECT w.Id
+    FROM `bellabeat-case-study-396919.fitbit_data.weight_log` AS w
+  )
+ORDER BY 
+	a.Id ASC;
