@@ -1,0 +1,22 @@
+--Compare distance that users logged to what the Fitbit tracked
+SELECT  
+  Id,
+  ActivityDate,
+--Round distances to two decimals to increase readability
+  ROUND(TrackerDistance,2) AS TrackerDistance,
+  ROUND(TotalDistance,2) AS TotalDistance,
+--Find the difference between total distance and tracked distance to discover what the user logged and was not tracked by the Fitbit device
+  ROUND(TotalDistance-TrackerDistance,2) AS LoggedNotTracked,
+--Convert the distance tracked to a percentage of the users total distance
+  ROUND(TrackerDistance/TotalDistance*100,2) AS TrackedPercent,
+--When the tracker distance and total distance are the same, the logged percent is zero, otherwise calculate the percent of logged and untracked activity as a percentage
+  CASE WHEN TrackerDistance=TotalDistance THEN 0
+      ELSE ROUND(((TotalDistance-TrackerDistance)/TotalDistance)*100,2)
+      END AS LoggedPercent
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.daily_activity` 
+WHERE 
+  TotalDistance != 0.0
+ORDER BY 
+  Id, 
+  ActivityDate;
