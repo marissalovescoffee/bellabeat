@@ -1,0 +1,17 @@
+--Calculate daily_activity averages for each user
+SELECT  
+  Id,
+  COUNT(DISTINCT ActivityDate) AS days_active,
+  ROUND(AVG(TotalSteps),1) AS avg_steps,
+  ROUND(AVG(Calories),1) AS avg_cals,
+  ROUND(AVG(TotalDistance),1) AS avg_total_distance,
+  ROUND(AVG(VeryActiveMinutes/60),1) AS avg_very_active_hrs,
+  ROUND(AVG(FairlyActiveMinutes/60),1) AS avg_fairly_active_hrs,
+  ROUND(AVG(LightlyActiveMinutes/60),1) AS avg_lightly_active_hrs,
+  ROUND(AVG(SedentaryMinutes/60),1) AS avg_sedentary_hrs
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.daily_activity`
+GROUP BY
+  Id
+ORDER BY 
+  Id;
