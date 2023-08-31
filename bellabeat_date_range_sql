@@ -1,0 +1,21 @@
+--Returning any sleep_day activity entries that are outside the correct timeframe
+SELECT *
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.daily_activity`
+WHERE 
+  ActivityDate NOT BETWEEN '2016-03-12' AND '2016-05-12';
+
+--Returning any sleep_day activity entries that are outside the correct timeframe
+SELECT *
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.sleep_day`
+WHERE 
+  SleepDay NOT BETWEEN '2016-03-12' AND '2016-05-12';
+
+--Casting the Date column to be processed as a date and changing the where clause so it doesn't return 05-12 results
+SELECT 
+  CAST(Date AS date)
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.weight_log`
+WHERE 
+  Date < '2016-03-12' AND Date < '2016-05-12';
