@@ -1,0 +1,22 @@
+--Pull user totals and averages from sleep and activity tables
+SELECT  
+  act.Id,
+  SUM(act.TotalSteps) AS total_steps,
+  ROUND(AVG(act.TotalSteps),1) AS avg_steps,
+  SUM(act.Calories) AS total_cals,
+  ROUND(AVG(act.Calories),1) AS avg_cals,
+--Calculate user's average time spent sedentary and awake then convert to hours
+  ROUND(AVG((act.SedentaryMinutes-sleep.TotalMinutesAsleep)/60),1) AS avg_awake_sedentary_hrs,
+  ROUND(AVG(sleep.TotalMinutesAsleep/60),1) AS avg_sleep_hrs
+--Join sleep and activity tables so the sleep date is paired with the activity date that it impacted
+FROM 
+  `bellabeat-case-study-396919.fitbit_data.daily_activity` AS act
+  LEFT JOIN `bellabeat-case-study-396919.fitbit_data.sleep_day` AS sleep
+  ON act.Id = sleep.Id AND act.ActivityDate = (sleep.SleepDay+1)
+--Filter out data that sleep didn't impact
+WHERE 
+  sleep.TotalMinutesAsleep IS NOT NULL
+GROUP BY
+  act.Id
+ORDER BY 
+  act.Id;
