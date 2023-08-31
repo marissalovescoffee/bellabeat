@@ -1,0 +1,17 @@
+--Calculate user averages in relation to weight data
+SELECT
+  weight.Id,
+  COUNT(DISTINCT act.ActivityDate) AS days_active,
+  ROUND(AVG(weight.WeightPounds),1) AS avg_weight_lbs,
+  ROUND(AVG(weight.BMI),1) AS avg_bmi,
+  ROUND(AVG(act.TotalSteps),1) AS avg_steps,
+  ROUND(AVG(act.Calories),1) AS avg_cals_burned
+--Right join daily_activity and weight_log to filter out users who did not provide weight data
+FROM
+  `bellabeat-case-study-396919.fitbit_data.daily_activity` AS act
+  RIGHT JOIN `bellabeat-case-study-396919.fitbit_data.weight_log` AS weight
+  ON act.Id = weight.Id
+GROUP BY 
+  weight.Id
+ORDER BY
+  weight.Id;
