@@ -1,0 +1,17 @@
+— Counting the distinct values in the Id column of daily_activity
+SELECT 
+	COUNT(DISTINCT Id) AS distinct_id_activity 
+FROM 
+	`bellabeat-case-study-396919.fitbit_data.daily_activity`;
+
+— Counting the distinct values in the Id column of sleep_day
+SELECT 
+	COUNT(DISTINCT Id) AS distinct_id_sleep
+FROM 
+	`bellabeat-case-study-396919.fitbit_data.sleep_day`;
+
+— Counting the distinct values in the Id column of sleep_day
+SELECT 
+	COUNT(DISTINCT Id) AS distinct_id_weight
+FROM 
+	`bellabeat-case-study-396919.fitbit_data.weight_log`;
